@@ -12,13 +12,17 @@ export default function ConfirmPage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         router.replace("/dashboard");
-      } else if (event === "SIGNED_OUT" || event === "INITIAL_SESSION") {
-        supabase.auth.getSession().then(({ data }) => {
-          if (!data.session) router.replace("/login?error=auth");
-        });
       }
     });
-    return () => subscription.unsubscribe();
+    const timeout = setTimeout(() => {
+      supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) router.replace("/login?error=auth");
+      });
+    }, 3000);
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, [router]);
 
   return (
