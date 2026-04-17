@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Zap, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Zap, Check } from "lucide-react";
 
 interface Props {
   profile: {
@@ -31,48 +32,32 @@ const FREE_FEATURES = [
 ];
 
 export default function BillingClient({ profile }: Props) {
-  const [loading, setLoading] = useState<"checkout" | "portal" | null>(null);
+  const [upgrading, setUpgrading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   const isPro = profile?.plan === "pro";
 
-  async function handleCheckout() {
-    setLoading("checkout");
+  async function handleApprove(subscriptionID: string) {
+    setUpgrading(true);
     try {
-      const res = await fetch("/api/stripe/checkout", { method: "POST" });
-      const { url, error } = await res.json();
-      if (error) throw new Error(error);
-      window.location.href = url;
-    } catch (err: unknown) {
-      toast({
-        title: "Error",
-        description: err instanceof Error ? err.message : "Intenta de nuevo.",
-        variant: "destructive",
+      const res = await fetch("/api/paypal/activate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subscriptionID }),
       });
-      setLoading(null);
-    }
-  }
-
-  async function handlePortal() {
-    setLoading("portal");
-    try {
-      const res = await fetch("/api/stripe/portal", { method: "POST" });
-      const { url, error } = await res.json();
-      if (error) throw new Error(error);
-      window.location.href = url;
-    } catch (err: unknown) {
-      toast({
-        title: "Error",
-        description: err instanceof Error ? err.message : "Intenta de nuevo.",
-        variant: "destructive",
-      });
-      setLoading(null);
+      if (!res.ok) throw new Error("Error activando plan");
+      toast({ title: "Plan Pro activado", description: "Bienvenido a Pro!" });
+      router.refresh();
+    } catch {
+      toast({ title: "Error", description: "No se pudo activar el plan.", variant: "destructive" });
+    } finally {
+      setUpgrading(false);
     }
   }
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4">
-        {/* Plan Free */}
         <Card className={`border-2 ${!isPro ? "border-violet-600" : "border-gray-100"}`}>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -93,7 +78,6 @@ export default function BillingClient({ profile }: Props) {
           </CardContent>
         </Card>
 
-        {/* Plan Pro */}
         <Card className={`border-2 ${isPro ? "border-violet-600" : "border-gray-100"} relative overflow-hidden`}>
           <div className="absolute top-0 right-0 bg-violet-600 text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
             Popular
@@ -118,44 +102,28 @@ export default function BillingClient({ profile }: Props) {
               ))}
             </ul>
             {!isPro && (
-              <Button
-                className="w-full bg-violet-600 hover:bg-violet-700"
-                onClick={handleCheckout}
-                disabled={loading === "checkout"}
-              >
-                {loading === "checkout" && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Upgrade a Pro
-              </Button>
+              <PayPalScriptProvider options={{
+                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+                vault: true,
+                intent: "subscription",
+              }}>
+                <PayPalButtons
+                  style={{ shape: "rect", color: "blue", layout: "vertical", label: "subscribe" }}
+                  disabled={upgrading}
+                  createSubscription={(_data, actions) =>
+                    actions.subscription.create({ plan_id: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID! })
+                  }
+                  onApprove={(data) => handleApprove(data.subscriptionID!)}
+                  onError={() => toast({ title: "Error con PayPal", variant: "destructive" })}
+                />
+              </PayPalScriptProvider>
+            )}
+            {isPro && (
+              <p className="text-sm text-center text-violet-600 font-medium">Plan activo</p>
             )}
           </CardContent>
         </Card>
       </div>
-
-      {isPro && profile?.stripe_subscription_id && (
-        <Card className="border-gray-100">
-          <CardContent className="pt-5 flex items-center justify-between">
-            <div>
-              <p className="font-medium text-sm">Suscripción activa</p>
-              <p className="text-xs text-muted-foreground capitalize">
-                Estado: {profile.subscription_status}
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handlePortal}
-              disabled={loading === "portal"}
-            >
-              {loading === "portal" && (
-                <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-              )}
-              Gestionar suscripción
-            </Button>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }
