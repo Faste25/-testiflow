@@ -56,7 +56,7 @@ export default function SettingsClient({ profile }: { profile: Profile | null })
           </div>
           <Button
             type="submit"
-            className="bg-violet-600 hover:bg-violet-700"
+            className="bg-indigo-700 hover:bg-indigo-800"
             disabled={loading}
           >
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

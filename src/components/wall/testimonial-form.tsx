@@ -286,7 +286,7 @@ export default function TestimonialForm({ space }: TestimonialFormProps) {
 
           <Button
             type="submit"
-            className="w-full bg-violet-600 hover:bg-violet-700"
+            className="w-full bg-indigo-700 hover:bg-indigo-800"
             disabled={loading || recording}
           >
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

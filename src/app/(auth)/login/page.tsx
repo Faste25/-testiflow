@@ -47,10 +47,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 to-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-white px-4">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-9 h-9 bg-violet-600 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-indigo-700 rounded-lg flex items-center justify-center">
             <Zap className="w-5 h-5 text-white" />
           </div>
           <span className="text-2xl font-bold text-gray-900">TestiFlow</span>
@@ -70,7 +70,7 @@ export default function LoginPage() {
           <CardContent>
             {sent ? (
               <div className="text-center py-4">
-                <div className="w-16 h-16 bg-violet-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl">📧</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -101,7 +101,7 @@ export default function LoginPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-violet-600 hover:bg-violet-700"
+                  className="w-full bg-indigo-700 hover:bg-indigo-800"
                   disabled={loading}
                 >
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

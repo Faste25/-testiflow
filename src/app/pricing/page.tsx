@@ -35,11 +35,11 @@ export default async function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <div className="max-w-5xl mx-auto px-4 py-20">
         <div className="text-center mb-16">
           <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-indigo-700 rounded-lg flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-gray-900 text-lg">TestiFlow</span>
@@ -85,7 +85,7 @@ export default async function PricingPage() {
           </div>
 
           {/* Plan Pro */}
-          <div className="bg-violet-600 rounded-2xl p-8 flex flex-col relative overflow-hidden">
+          <div className="bg-indigo-700 rounded-2xl p-8 flex flex-col relative overflow-hidden">
             <div className="absolute top-4 right-4 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
               Popular
             </div>
@@ -93,16 +93,16 @@ export default async function PricingPage() {
               <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
                 <Zap className="w-4 h-4" /> Pro
               </h2>
-              <p className="text-violet-200 text-sm">Para profesionales que quieren escalar</p>
+              <p className="text-indigo-200 text-sm">Para profesionales que quieren escalar</p>
             </div>
             <div className="mb-8">
               <span className="text-5xl font-bold text-white">$19</span>
-              <span className="text-violet-200 ml-2">/mes</span>
+              <span className="text-indigo-200 ml-2">/mes</span>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
               {PRO_FEATURES.map((f) => (
                 <li key={f} className="flex items-start gap-3 text-sm text-white">
-                  <Check className="w-4 h-4 text-violet-300 mt-0.5 shrink-0" />
+                  <Check className="w-4 h-4 text-indigo-300 mt-0.5 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -110,7 +110,7 @@ export default async function PricingPage() {
             {user ? (
               plan === "pro" ? (
                 <Link href="/dashboard/billing">
-                  <Button className="w-full bg-white text-violet-600 hover:bg-violet-50">
+                  <Button className="w-full bg-white text-indigo-700 hover:bg-indigo-50">
                     Gestionar suscripción
                   </Button>
                 </Link>
@@ -119,7 +119,7 @@ export default async function PricingPage() {
               )
             ) : (
               <Link href="/login">
-                <Button className="w-full bg-white text-violet-600 hover:bg-violet-50">
+                <Button className="w-full bg-white text-indigo-700 hover:bg-indigo-50">
                   Empezar con Pro
                 </Button>
               </Link>
@@ -138,7 +138,7 @@ export default async function PricingPage() {
 function UpgradeButton() {
   return (
     <form action="/api/stripe/checkout" method="POST">
-      <Button type="submit" className="w-full bg-white text-violet-600 hover:bg-violet-50">
+      <Button type="submit" className="w-full bg-white text-indigo-700 hover:bg-indigo-50">
         Upgrade a Pro — $19/mes
       </Button>
     </form>
