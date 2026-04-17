@@ -10,11 +10,14 @@ export default async function TestimonialsPage() {
 
   if (!user) redirect("/login");
 
-  const { data: testimonials } = await supabase
-    .from("testimonials")
-    .select(`*, spaces!inner(name, user_id)`)
-    .eq("spaces.user_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: testimonials }, { data: profile }] = await Promise.all([
+    supabase
+      .from("testimonials")
+      .select(`*, spaces!inner(name, user_id)`)
+      .eq("spaces.user_id", user.id)
+      .order("created_at", { ascending: false }),
+    supabase.from("profiles").select("plan").eq("id", user.id).single(),
+  ]);
 
   return (
     <div>
@@ -24,7 +27,10 @@ export default async function TestimonialsPage() {
           Aprueba o rechaza los testimonios recibidos
         </p>
       </div>
-      <TestimonialsList initialTestimonials={testimonials ?? []} />
+      <TestimonialsList
+        initialTestimonials={testimonials ?? []}
+        userPlan={profile?.plan ?? "free"}
+      />
     </div>
   );
 }

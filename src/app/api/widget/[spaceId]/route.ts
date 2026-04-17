@@ -10,7 +10,7 @@ export async function GET(
 
   const { data: space } = await supabase
     .from("spaces")
-    .select("name, is_active")
+    .select("name, is_active, user_id")
     .eq("id", spaceId)
     .single();
 
@@ -18,16 +18,27 @@ export async function GET(
     return NextResponse.json({ error: "Space not found" }, { status: 404 });
   }
 
-  const { data: testimonials } = await supabase
-    .from("testimonials")
-    .select("submitter_name, text_content, video_url, rating")
-    .eq("space_id", spaceId)
-    .eq("status", "approved")
-    .order("created_at", { ascending: false })
-    .limit(20);
+  const [{ data: testimonials }, { data: profile }] = await Promise.all([
+    supabase
+      .from("testimonials")
+      .select("submitter_name, text_content, video_url, rating, created_at")
+      .eq("space_id", spaceId)
+      .eq("status", "approved")
+      .order("created_at", { ascending: false })
+      .limit(20),
+    supabase
+      .from("profiles")
+      .select("plan")
+      .eq("id", space.user_id)
+      .single(),
+  ]);
 
   return NextResponse.json(
-    { testimonials: testimonials ?? [], spaceName: space.name },
+    {
+      testimonials: testimonials ?? [],
+      spaceName: space.name,
+      hideBranding: profile?.plan === "pro",
+    },
     {
       headers: {
         "Access-Control-Allow-Origin": "*",

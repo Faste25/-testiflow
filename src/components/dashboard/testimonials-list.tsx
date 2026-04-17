@@ -7,10 +7,13 @@ import { Testimonial, TestimonialStatus } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Check, X, Play, MessageSquare } from "lucide-react";
+import { Check, X, Play, MessageSquare, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type TestimonialWithSpace = Testimonial & { spaces: { name: string } };
+
+const FREE_LIMIT = 10;
 
 const FILTERS: { label: string; value: TestimonialStatus | "all" }[] = [
   { label: "Todos", value: "all" },
@@ -33,9 +36,10 @@ const STATUS_LABEL: Record<TestimonialStatus, string> = {
 
 interface Props {
   initialTestimonials: TestimonialWithSpace[];
+  userPlan?: string;
 }
 
-export default function TestimonialsList({ initialTestimonials }: Props) {
+export default function TestimonialsList({ initialTestimonials, userPlan = "free" }: Props) {
   const [testimonials, setTestimonials] =
     useState<TestimonialWithSpace[]>(initialTestimonials);
   const [filter, setFilter] = useState<TestimonialStatus | "all">("all");
@@ -49,7 +53,18 @@ export default function TestimonialsList({ initialTestimonials }: Props) {
       ? testimonials
       : testimonials.filter((t) => t.status === filter);
 
+  const approvedCount = testimonials.filter((t) => t.status === "approved").length;
+
   async function updateStatus(id: string, status: TestimonialStatus) {
+    if (status === "approved" && userPlan === "free" && approvedCount >= FREE_LIMIT) {
+      toast({
+        title: "Límite del plan Free alcanzado",
+        description: "Upgrade a Pro para aprobar testimonios ilimitados.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const { error } = await supabase
       .from("testimonials")
       .update({ status })
@@ -80,6 +95,19 @@ export default function TestimonialsList({ initialTestimonials }: Props) {
 
   return (
     <div>
+      {userPlan === "free" && approvedCount >= FREE_LIMIT && (
+        <div className="flex items-center justify-between bg-violet-50 border border-violet-200 rounded-xl px-4 py-3 mb-4">
+          <p className="text-sm text-violet-700 font-medium">
+            Alcanzaste el límite de {FREE_LIMIT} testimonios aprobados del plan Free.
+          </p>
+          <Link href="/pricing">
+            <Button size="sm" className="bg-violet-600 hover:bg-violet-700 shrink-0 ml-3">
+              <Zap className="w-3.5 h-3.5 mr-1.5" />
+              Upgrade a Pro
+            </Button>
+          </Link>
+        </div>
+      )}
       <div className="flex gap-2 mb-6">
         {FILTERS.map((f) => (
           <button

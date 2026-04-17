@@ -190,9 +190,9 @@
       container.innerHTML = `<div class="tf-root tf-theme-${theme}"><div class="tf-empty">Cargando testimonios...</div></div>`;
       const res = await fetch(`${APP_URL}/api/widget/${spaceId}`);
       if (!res.ok) { container.innerHTML = ""; return; }
-      const { testimonials, spaceName } = await res.json();
+      const { testimonials, spaceName, hideBranding: apiHideBranding } = await res.json();
       if (!testimonials?.length) { container.innerHTML = ""; return; }
-      container.innerHTML = buildHTML(testimonials, spaceName, hideBranding);
+      container.innerHTML = buildHTML(testimonials, spaceName, hideBranding || apiHideBranding);
       initCarousel(container, testimonials.length);
       initVideos(container);
     } catch (e) {

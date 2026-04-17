@@ -47,5 +47,8 @@ export async function POST() {
     metadata: { user_id: user.id },
   });
 
+  // Si viene de un form POST (pricing page), redirigir directo
+  const contentType = (await Promise.resolve("")) || "";
+  if (session.url) return NextResponse.redirect(session.url, { status: 303 });
   return NextResponse.json({ url: session.url });
 }
