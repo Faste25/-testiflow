@@ -9,13 +9,16 @@ export default function ConfirmPage() {
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         router.replace("/dashboard");
-      } else {
-        router.replace("/login?error=auth");
+      } else if (event === "SIGNED_OUT" || event === "INITIAL_SESSION") {
+        supabase.auth.getSession().then(({ data }) => {
+          if (!data.session) router.replace("/login?error=auth");
+        });
       }
     });
+    return () => subscription.unsubscribe();
   }, [router]);
 
   return (
