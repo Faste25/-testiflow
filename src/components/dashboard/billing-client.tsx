@@ -14,6 +14,8 @@ interface Props {
     subscription_status: string;
     stripe_subscription_id: string | null;
   } | null;
+  paypalClientId: string;
+  paypalPlanId: string;
 }
 
 const PRO_FEATURES = [
@@ -31,7 +33,7 @@ const FREE_FEATURES = [
   "Branding de TestiFlow",
 ];
 
-export default function BillingClient({ profile }: Props) {
+export default function BillingClient({ profile, paypalClientId, paypalPlanId }: Props) {
   const [upgrading, setUpgrading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -103,7 +105,7 @@ export default function BillingClient({ profile }: Props) {
             </ul>
             {!isPro && (
               <PayPalScriptProvider options={{
-                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+                clientId: paypalClientId,
                 vault: true,
                 intent: "subscription",
               }}>
@@ -111,7 +113,7 @@ export default function BillingClient({ profile }: Props) {
                   style={{ shape: "rect", color: "blue", layout: "vertical", label: "subscribe" }}
                   disabled={upgrading}
                   createSubscription={(_data, actions) =>
-                    actions.subscription.create({ plan_id: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID! })
+                    actions.subscription.create({ plan_id: paypalPlanId })
                   }
                   onApprove={(data) => handleApprove(data.subscriptionID!)}
                   onError={() => toast({ title: "Error con PayPal", variant: "destructive" })}

@@ -24,7 +24,11 @@ export default async function BillingPage() {
           Gestiona tu plan y suscripción
         </p>
       </div>
-      <BillingClient profile={profile} />
+      <BillingClient
+        profile={profile}
+        paypalClientId={process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!}
+        paypalPlanId={process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID!}
+      />
     </div>
   );
 }
