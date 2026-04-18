@@ -170,7 +170,7 @@ export default async function Home() {
             <div className="absolute top-4 right-4 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Popular</div>
             <h3 className="text-xl font-bold text-white mb-1 flex items-center gap-2"><Zap className="w-4 h-4" />Pro</h3>
             <p className="text-sm text-indigo-200 mb-6">Para profesionales</p>
-            <p className="text-4xl font-bold text-white mb-6">$19<span className="text-base font-normal text-indigo-300">/mes</span></p>
+            <p className="text-4xl font-bold text-white mb-6">$12<span className="text-base font-normal text-indigo-300">/mes</span></p>
             <ul className="space-y-3 mb-8">
               {["Testimonios ilimitados", "Sin branding de TestiFlow", "Widget embed premium", "Soporte prioritario"].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-white">

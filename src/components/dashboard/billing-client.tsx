@@ -92,7 +92,7 @@ export default function BillingClient({ profile, paypalClientId, paypalPlanId }:
               </CardTitle>
               {isPro && <Badge className="bg-indigo-100 text-indigo-700">Actual</Badge>}
             </div>
-            <p className="text-2xl font-bold">$19<span className="text-sm font-normal text-muted-foreground">/mes</span></p>
+            <p className="text-2xl font-bold">$12<span className="text-sm font-normal text-muted-foreground">/mes</span></p>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 mb-4">

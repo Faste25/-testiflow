@@ -96,7 +96,7 @@ export default async function PricingPage() {
               <p className="text-indigo-200 text-sm">Para profesionales que quieren escalar</p>
             </div>
             <div className="mb-8">
-              <span className="text-5xl font-bold text-white">$19</span>
+              <span className="text-5xl font-bold text-white">$12</span>
               <span className="text-indigo-200 ml-2">/mes</span>
             </div>
             <ul className="space-y-3 mb-8 flex-1">
@@ -139,7 +139,7 @@ function UpgradeButton() {
   return (
     <form action="/api/stripe/checkout" method="POST">
       <Button type="submit" className="w-full bg-white text-indigo-600 hover:bg-indigo-50">
-        Upgrade a Pro — $19/mes
+        Upgrade a Pro — $12/mes
       </Button>
     </form>
   );

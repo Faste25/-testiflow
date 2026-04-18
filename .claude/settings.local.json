@@ -10,7 +10,9 @@
       "Bash(python3 -c \"import sys,json; print\\(json.load\\(sys.stdin\\)['access_token']\\)\")",
       "WebFetch(domain:testiflow-five.vercel.app)",
       "Bash(xargs cat *)",
-      "Bash(wait)"
+      "Bash(wait)",
+      "Bash(grep -i \"price\\\\|mes\\\\|usd\\\\|\\\\$\")",
+      "Bash(grep *)"
     ]
   }
 }
