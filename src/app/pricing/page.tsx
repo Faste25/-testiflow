@@ -128,7 +128,7 @@ export default async function PricingPage() {
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-10">
-          Sin contratos. Cancela cuando quieras. Pago seguro con Stripe.
+          Sin contratos. Cancela cuando quieras. Pago seguro con PayPal.
         </p>
       </div>
     </div>
