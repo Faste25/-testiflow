@@ -30,7 +30,7 @@ export default function SpaceEmbedSection({ spaceId, slug }: Props) {
     <Card className="border-gray-100">
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center gap-2">
-          <Code2 className="w-4 h-4 text-indigo-700" />
+          <Code2 className="w-4 h-4 text-indigo-600" />
           Embed en tu web
         </CardTitle>
       </CardHeader>
@@ -60,7 +60,7 @@ export default function SpaceEmbedSection({ spaceId, slug }: Props) {
           <a
             href={`${appUrl}/wall/${slug}`}
             target="_blank"
-            className="text-indigo-700 hover:underline"
+            className="text-indigo-600 hover:underline"
           >
             {appUrl}/wall/{slug}
           </a>

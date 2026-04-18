@@ -97,11 +97,11 @@ export default function TestimonialsList({ initialTestimonials, userPlan = "free
     <div>
       {userPlan === "free" && approvedCount >= FREE_LIMIT && (
         <div className="flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 mb-4">
-          <p className="text-sm text-indigo-800 font-medium">
+          <p className="text-sm text-indigo-700 font-medium">
             Alcanzaste el límite de {FREE_LIMIT} testimonios aprobados del plan Free.
           </p>
           <Link href="/pricing">
-            <Button size="sm" className="bg-indigo-700 hover:bg-indigo-800 shrink-0 ml-3">
+            <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 shrink-0 ml-3">
               <Zap className="w-3.5 h-3.5 mr-1.5" />
               Upgrade a Pro
             </Button>
@@ -116,7 +116,7 @@ export default function TestimonialsList({ initialTestimonials, userPlan = "free
             className={cn(
               "px-4 py-1.5 rounded-full text-sm font-medium transition-colors",
               filter === f.value
-                ? "bg-indigo-700 text-white"
+                ? "bg-indigo-600 text-white"
                 : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
             )}
           >
@@ -139,7 +139,7 @@ export default function TestimonialsList({ initialTestimonials, userPlan = "free
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-800">
+                  <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700">
                     {t.submitter_name.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
@@ -184,7 +184,7 @@ export default function TestimonialsList({ initialTestimonials, userPlan = "free
                     ) : (
                       <button
                         onClick={() => setPlayingId(t.id)}
-                        className="flex items-center gap-2 text-xs text-indigo-700 hover:text-indigo-900 font-medium"
+                        className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-800 font-medium"
                       >
                         <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
                           <Play className="w-3.5 h-3.5 ml-0.5" />

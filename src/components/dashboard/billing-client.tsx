@@ -60,11 +60,11 @@ export default function BillingClient({ profile, paypalClientId, paypalPlanId }:
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4">
-        <Card className={`border-2 ${!isPro ? "border-indigo-700" : "border-gray-100"}`}>
+        <Card className={`border-2 ${!isPro ? "border-indigo-600" : "border-gray-100"}`}>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base">Free</CardTitle>
-              {!isPro && <Badge className="bg-indigo-100 text-indigo-800">Actual</Badge>}
+              {!isPro && <Badge className="bg-indigo-100 text-indigo-700">Actual</Badge>}
             </div>
             <p className="text-2xl font-bold">$0<span className="text-sm font-normal text-muted-foreground">/mes</span></p>
           </CardHeader>
@@ -80,17 +80,17 @@ export default function BillingClient({ profile, paypalClientId, paypalPlanId }:
           </CardContent>
         </Card>
 
-        <Card className={`border-2 ${isPro ? "border-indigo-700" : "border-gray-100"} relative overflow-hidden`}>
-          <div className="absolute top-0 right-0 bg-indigo-700 text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
+        <Card className={`border-2 ${isPro ? "border-indigo-600" : "border-gray-100"} relative overflow-hidden`}>
+          <div className="absolute top-0 right-0 bg-indigo-600 text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
             Popular
           </div>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base flex items-center gap-1.5">
-                <Zap className="w-4 h-4 text-indigo-700" />
+                <Zap className="w-4 h-4 text-indigo-600" />
                 Pro
               </CardTitle>
-              {isPro && <Badge className="bg-indigo-100 text-indigo-800">Actual</Badge>}
+              {isPro && <Badge className="bg-indigo-100 text-indigo-700">Actual</Badge>}
             </div>
             <p className="text-2xl font-bold">$19<span className="text-sm font-normal text-muted-foreground">/mes</span></p>
           </CardHeader>
@@ -98,7 +98,7 @@ export default function BillingClient({ profile, paypalClientId, paypalPlanId }:
             <ul className="space-y-2 mb-4">
               {PRO_FEATURES.map((f) => (
                 <li key={f} className="flex items-start gap-2 text-sm">
-                  <Check className="w-4 h-4 text-indigo-700 mt-0.5 shrink-0" />
+                  <Check className="w-4 h-4 text-indigo-600 mt-0.5 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -121,7 +121,7 @@ export default function BillingClient({ profile, paypalClientId, paypalPlanId }:
               </PayPalScriptProvider>
             )}
             {isPro && (
-              <p className="text-sm text-center text-indigo-700 font-medium">Plan activo</p>
+              <p className="text-sm text-center text-indigo-600 font-medium">Plan activo</p>
             )}
           </CardContent>
         </Card>

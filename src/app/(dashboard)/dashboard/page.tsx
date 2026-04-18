@@ -34,7 +34,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <Link href="/dashboard/spaces/new">
-          <Button className="bg-indigo-700 hover:bg-indigo-800">
+          <Button className="bg-indigo-600 hover:bg-indigo-700">
             <Plus className="w-4 h-4 mr-2" />
             Nuevo Espacio
           </Button>
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
             testimonios en texto o video.
           </p>
           <Link href="/dashboard/spaces/new">
-            <Button className="bg-indigo-700 hover:bg-indigo-800">
+            <Button className="bg-indigo-600 hover:bg-indigo-700">
               <Plus className="w-4 h-4 mr-2" />
               Crear primer Espacio
             </Button>

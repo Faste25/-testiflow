@@ -50,7 +50,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-white px-4">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-9 h-9 bg-indigo-700 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center">
             <Zap className="w-5 h-5 text-white" />
           </div>
           <span className="text-2xl font-bold text-gray-900">TestiFlow</span>
@@ -101,7 +101,7 @@ export default function LoginPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-indigo-700 hover:bg-indigo-800"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700"
                   disabled={loading}
                 >
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
